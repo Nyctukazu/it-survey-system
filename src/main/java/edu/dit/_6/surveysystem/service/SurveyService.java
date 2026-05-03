@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 
 import edu.dit._6.surveysystem.model.SurveyForm;
 import edu.dit._6.surveysystem.repository.SurveyRepository;
+import edu.dit._6.surveysystem.model.Question;
+import edu.dit._6.surveysystem.model.Choice;
+import edu.dit._6.surveysystem.model.Answer;
 
 @Service
 public class SurveyService {
@@ -31,7 +34,15 @@ public class SurveyService {
 
     public SurveyForm createSurvey(SurveyForm form) {
         if (form.getQuestions() != null) {
-            form.getQuestions().forEach(q -> q.setSurveyForm(form));
+            for (Question question : form.getQuestions()) {
+                question.setSurveyForm(form);
+
+                if (question.getChoices() != null) {
+                    for (Choice choice : question.getChoices()) {
+                        choice.setQuestion(question);
+                    }
+                }
+            }
         }
         return surveyRepository.save(form);
     }
