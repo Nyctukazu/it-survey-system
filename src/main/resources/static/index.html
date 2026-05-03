@@ -1,12 +1,73 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disaster Preparedness Survey</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
 
-<html>
-    <head>
-        <title>Client Page</title>
-        <link rel="stylesheet" href="css/main.css">
-    </head>
-    <body>
+    <div class="survey-container">
+        <!-- HEADER (Unchanged) -->
+        <header class="survey-header">
+            <div class="header-left">
+                <h1>DISASTER<br>PREPAREDNESS<br>SURVEY</h1>
+            </div>
+            <div class="header-right">
+                <div class="input-row">
+                    <label>Name:</label>
+                    <input type="text" id="userName">
+                </div>
+                <div class="input-row">
+                    <label>Age:</label>
+                    <input type="text" id="userAge">
+                </div>
+                <div class="input-row">
+                    <label>Contact Information:</label>
+                    <input type="text" id="userContact">
+                </div>
+                <div class="input-row">
+                    <label>Form Number:</label>
+                    <span class="form-number-text">000001</span>
+                </div>
+            </div>
+        </header>
 
-        <script src="js/mainScript.js"></script>
-    </body>
+        <!-- BODY -->
+        <main class="survey-body">
+            
+            <!-- STEP 1: Demographics -->
+            <section id="step-demographics" class="form-section">
+                <h2>Household Information:</h2>
+                <label class="block-label">Address:</label>
+                <input type="text" id="userAddress" class="full-width-input">
+                
+                <label class="block-label">Family Members:</label>
+                <textarea id="familyMembers" class="full-width-input" rows="2"></textarea>
+
+                <button id="btn-start-survey">Start Survey</button>
+            </section>
+
+            <!-- STEP 2: The Reusable Survey Shell (Hidden at first) -->
+            <section id="step-survey" class="form-section hidden">
+                <!-- JS will update this title for every page -->
+                <h2 id="dynamic-page-title">Page Title</h2>
+                
+                <!-- JS will inject the questions for the current page here -->
+                <div id="dynamic-questions-container"></div>
+                
+                <!-- Grouped Navigation Buttons -->
+                <div class="button-group">
+                    <button id="btn-back-page" class="hidden">Back</button>
+                    <button id="btn-next-page">Next Page</button>
+                    <button id="btn-submit" class="hidden">Submit Survey</button>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="mainScript.js"></script>
+</body>
 </html>
