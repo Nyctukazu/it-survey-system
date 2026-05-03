@@ -8,11 +8,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 
 import java.util.List;
 import java.util.ArrayList;
 
 @Entity
+@JsonPropertyOrder({ "id", "content", "type", "choices", "answer", "surveyForm"})
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +26,7 @@ public class Question {
 
     @ManyToOne
     @JoinColumn(name = "survey_form_id")
+    @JsonIgnoreProperties("questions")
     private SurveyForm surveyForm;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
