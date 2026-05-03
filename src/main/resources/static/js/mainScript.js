@@ -1,37 +1,6 @@
-// 1. THE MASTER LIST
-const surveyPages = [
-    {
-        pageTitle: "Preparedness Check",
-        questions: [
-            { id: "q1", text: "Do you have an Emergency Kit?", type: "yes-no" },
-            { id: "q2", text: "Do you have working flashlights?", type: "yes-no" }
-        ]
-    },
-    {
-        pageTitle: "Evacuation Planning",
-        questions: [
-            { 
-                id: "q3", 
-                text: "Where is your primary Evacuation Place?", 
-                type: "checkbox", 
-                options: ["Barangay Hall", "Bunker", "Local Shelter", "School"] 
-            },
-            { id: "q4", text: "Do you know the evacuation route?", type: "yes-no" }
-        ]
-    },
-    {
-        pageTitle: "Local Tourism Impacts",
-        questions: [
-            { id: "q5", text: "Has flooding affected local tourist spots recently?", type: "yes-no" },
-            { 
-                id: "q6", 
-                text: "Which tourist spots are most vulnerable?", 
-                type: "checkbox", 
-                options: ["City Plaza", "Riverwalk Park", "Mountain Trail"] 
-            }
-        ]
-    }
-];
+let surveyPages = [];
+import { fetchSurveyQuestions } from './api/surveyService.js';
+
 
 // 2. Tracking our state
 let currentPageIndex = 0; 
@@ -45,18 +14,27 @@ const btnNext = document.getElementById('btn-next-page');
 const btnBack = document.getElementById('btn-back-page');
 const btnSubmit = document.getElementById('btn-submit');
 
+
 // 4. Start Survey Button Logic
-btnStart.addEventListener('click', () => {
+btnStart.addEventListener('click', async () => {
     finalSurveyData.demographics.name = document.getElementById('userName').value;
     finalSurveyData.demographics.age = document.getElementById('userAge').value;
     finalSurveyData.demographics.contact = document.getElementById('userContact').value;
     finalSurveyData.demographics.address = document.getElementById('userAddress').value;
     finalSurveyData.demographics.familyMembers = document.getElementById('familyMembers').value;
     
-    stepDemographics.classList.add('hidden');
-    stepSurvey.classList.remove('hidden');
+    try {
+        btnStart.innerText = "Loading...";
+        surveyPages = await fetchSurveyQuestions();
     
-    renderCurrentPage();
+        stepDemographics.classList.add('hidden');
+        stepSurvey.classList.remove('hidden');
+    
+        renderCurrentPage();
+    } catch (error) {
+        alert("Could not load survey questions. Please try again later.");
+        btnStart.innerText = "Start Survey";
+    }
 });
 
 // 5. THE BUILDER FUNCTION
@@ -65,42 +43,40 @@ function renderCurrentPage() {
     const title = document.getElementById('dynamic-page-title');
     
     const currentPageData = surveyPages[currentPageIndex];
-    title.textContent = currentPageData.pageTitle;
+    title.textContent = currentPageData.title;
     container.innerHTML = ''; 
 
     currentPageData.questions.forEach(question => {
         const qBlock = document.createElement('div');
         qBlock.className = 'question-block';
 
-        let htmlSnippet = `<div class="question-text">${question.text}</div>`;
+        let htmlSnippet = `<div class="question-text">${question.content}</div>`;
 
         // Check our finalSurveyData to see if they already answered this!
         const savedAnswer = finalSurveyData.answers[question.id];
 
-        if (question.type === "yes-no") {
-            // Determine if Yes or No should be pre-checked
-            const isYesChecked = savedAnswer === "Yes" ? "checked" : "";
-            const isNoChecked = savedAnswer === "No" ? "checked" : "";
-
+        htmlSnippet += `<div class="options-container">`;
+        if (question.type === "RADIO") {
+            question.choices.forEach(opt => {
+            const isChecked = savedAnswer === opt ? "checked" : "";
             htmlSnippet += `
-                <div class="options-container">
-                    <label><input type="radio" name="${question.id}" value="Yes" ${isYesChecked}> Yes</label>
-                    <label style="margin-left: 20px;"><input type="radio" name="${question.id}" value="No" ${isNoChecked}> No</label>
-                </div>
-            `;
+                <label style="margin-right: 20px; display: inline-block;">
+                    <input type="radio" name="${question.id}" value="${opt}" ${isChecked}> ${opt.text}
+                </label>`;
+            });
+
         } 
-        else if (question.type === "checkbox") {
+        else if (question.type === "CHECKBOX") {
             // Checkboxes save arrays, so we default to an empty array if undefined
             const savedArray = savedAnswer || []; 
-            
-            htmlSnippet += `<div class="options-container">`;
-            question.options.forEach(opt => {
+            question.choices.forEach(opt => {
                 // Check if this specific option is in their saved answers
                 const isChecked = savedArray.includes(opt) ? "checked" : "";
-                htmlSnippet += `<label style="display:block; margin-bottom:8px;"><input type="checkbox" name="${question.id}" value="${opt}" ${isChecked}> ${opt}</label>`;
+                htmlSnippet += `<label style="display:block; margin-bottom:8px;"><input type="checkbox" name="${question.id}" value="${opt}" ${isChecked}> ${opt.text}</label>`;
             });
-            htmlSnippet += `</div>`;
         }
+
+        htmlSnippet += `</div>`;
 
         qBlock.innerHTML = htmlSnippet;
         container.appendChild(qBlock);
@@ -151,12 +127,12 @@ function saveCurrentAnswers() {
     const currentPageData = surveyPages[currentPageIndex];
     
     currentPageData.questions.forEach(question => {
-        if (question.type === "yes-no") {
+        if (question.type === "RADIO") {
             const checked = document.querySelector(`input[name="${question.id}"]:checked`);
             if (checked) {
                 finalSurveyData.answers[question.id] = checked.value;
             }
-        } else if (question.type === "checkbox") {
+        } else if (question.type === "CHECKBOX") {
             const checks = document.querySelectorAll(`input[name="${question.id}"]:checked`);
             let selected = [];
             checks.forEach(c => selected.push(c.value));

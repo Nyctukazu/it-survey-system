@@ -9,8 +9,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 
 @Entity
+@JsonPropertyOrder({ "id", "title", "description", "questions" })
 public class SurveyForm {
 
     @Id
