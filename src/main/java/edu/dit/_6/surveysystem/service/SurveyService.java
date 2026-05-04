@@ -8,7 +8,6 @@ import edu.dit._6.surveysystem.model.SurveyForm;
 import edu.dit._6.surveysystem.repository.SurveyRepository;
 import edu.dit._6.surveysystem.model.Question;
 import edu.dit._6.surveysystem.model.Choice;
-import edu.dit._6.surveysystem.model.Answer;
 
 @Service
 public class SurveyService {

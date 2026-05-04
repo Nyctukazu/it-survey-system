@@ -6,10 +6,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Table;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 
 
 @Entity
+@Table(name = "answers")
+@JsonPropertyOrder({ "id", "responseValue", "question"})
 public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +27,8 @@ public class Answer {
     @JoinColumn(name = "question_id")
     @JsonIgnore
     private Question question;
+
+    public Answer() { }
 
     // Getters and Setters
     public Long getId() { return id; }
