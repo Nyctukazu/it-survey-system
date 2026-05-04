@@ -1,10 +1,9 @@
-let surveyPages = [];
 import { fetchSurveyQuestions } from './api/surveyService.js';
+import { createQuestionHTML } from './surveyRenderer.js';
+import { saveCurrentAnswers, finalSurveyData } from './surveyManager.js';
 
-
-// 2. Tracking our state
-let currentPageIndex = 0; 
-const finalSurveyData = { demographics: {}, answers: {} };
+export let currentPageIndex = 0; 
+export let surveyPages = [];
 
 // 3. UI Elements
 const stepDemographics = document.getElementById('step-demographics');
@@ -49,36 +48,7 @@ function renderCurrentPage() {
     currentPageData.questions.forEach(question => {
         const qBlock = document.createElement('div');
         qBlock.className = 'question-block';
-
-        let htmlSnippet = `<div class="question-text">${question.content}</div>`;
-
-        // Check our finalSurveyData to see if they already answered this!
-        const savedAnswer = finalSurveyData.answers[question.id];
-
-        htmlSnippet += `<div class="options-container">`;
-        if (question.type === "RADIO") {
-            question.choices.forEach(opt => {
-            const isChecked = savedAnswer === opt ? "checked" : "";
-            htmlSnippet += `
-                <label style="margin-right: 20px; display: inline-block;">
-                    <input type="radio" name="${question.id}" value="${opt}" ${isChecked}> ${opt.text}
-                </label>`;
-            });
-
-        } 
-        else if (question.type === "CHECKBOX") {
-            // Checkboxes save arrays, so we default to an empty array if undefined
-            const savedArray = savedAnswer || []; 
-            question.choices.forEach(opt => {
-                // Check if this specific option is in their saved answers
-                const isChecked = savedArray.includes(opt) ? "checked" : "";
-                htmlSnippet += `<label style="display:block; margin-bottom:8px;"><input type="checkbox" name="${question.id}" value="${opt}" ${isChecked}> ${opt.text}</label>`;
-            });
-        }
-
-        htmlSnippet += `</div>`;
-
-        qBlock.innerHTML = htmlSnippet;
+        qBlock.innerHTML = createQuestionHTML(question, finalSurveyData.answers[question.id]);
         container.appendChild(qBlock);
     });
 
@@ -101,7 +71,6 @@ function renderCurrentPage() {
     }
 }
 
-// 6. Navigation Button Logic
 btnNext.addEventListener('click', () => {
     saveCurrentAnswers(); 
     currentPageIndex++; 
@@ -121,24 +90,3 @@ btnSubmit.addEventListener('click', () => {
     console.log("SURVEY COMPLETE! READY FOR BACKEND:", finalSurveyData);
     alert("Survey finished! Check your console for the final data.");
 });
-
-// 8. Gather Data Function
-function saveCurrentAnswers() {
-    const currentPageData = surveyPages[currentPageIndex];
-    
-    currentPageData.questions.forEach(question => {
-        if (question.type === "RADIO") {
-            const checked = document.querySelector(`input[name="${question.id}"]:checked`);
-            if (checked) {
-                finalSurveyData.answers[question.id] = checked.value;
-            }
-        } else if (question.type === "CHECKBOX") {
-            const checks = document.querySelectorAll(`input[name="${question.id}"]:checked`);
-            let selected = [];
-            checks.forEach(c => selected.push(c.value));
-            if (selected.length > 0) {
-                finalSurveyData.answers[question.id] = selected;
-            }
-        }
-    });
-}

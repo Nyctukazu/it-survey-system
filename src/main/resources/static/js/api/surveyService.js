@@ -1,5 +1,5 @@
 
-const BASE_URL = 'https://localhost:8080/api/surveys';
+const BASE_URL = 'http://localhost:8080/api/surveys';
 
 export const fetchSurveyQuestions = async () => {
     try {
