@@ -1,6 +1,7 @@
 import { fetchSurveyQuestions } from './api/surveyService.js';
 import { createQuestionHTML } from './surveyRenderer.js';
 import { saveCurrentAnswers, finalSurveyData } from './surveyManager.js';
+import { goToNextPage } from './event.js';
 
 export let currentPageIndex = 0; 
 export let surveyPages = [];
@@ -90,3 +91,12 @@ btnSubmit.addEventListener('click', () => {
     console.log("SURVEY COMPLETE! READY FOR BACKEND:", finalSurveyData);
     alert("Survey finished! Check your console for the final data.");
 });
+
+document.querySelector('form').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+    }
+});
+
+window.saveCurrentAnswers = saveCurrentAnswers;
+window.goToNextPage = goToNextPage;

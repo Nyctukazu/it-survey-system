@@ -1,5 +1,6 @@
 import { surveyPages } from './main.js';
 import { currentPageIndex } from './main.js';
+
 export const finalSurveyData = { demographics: {}, answers: {} };
 
 export function saveCurrentAnswers() {
@@ -20,6 +21,18 @@ export function saveCurrentAnswers() {
                 break;
 
             case "TEXTBOX":
+                const textInputs = document.querySelectorAll(`input[name^="${question.id}_"]`);
+    
+                if (textInputs.length > 0) {
+       
+                const values = Array.from(textInputs).map(input => input.value.trim());
+        
+       
+                if (values.some(v => v !== "")) {
+                    finalSurveyData.answers[question.id] = values;
+                }
+            }
+            break;
             case "DROPDOWN":
             case "DATE":
                 const input = document.querySelector(`${nameSelector}`);
@@ -29,4 +42,5 @@ export function saveCurrentAnswers() {
                 break;
         }
     });
+    console.log(finalSurveyData);
 }

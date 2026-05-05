@@ -1,3 +1,5 @@
+
+
 export function createQuestionHTML(question, savedAnswer) {
     let htmlSnippet = `<div class="question-text">${question.content}</div>`;
     htmlSnippet += `<div class="options-container">`;
@@ -27,10 +29,11 @@ export function createQuestionHTML(question, savedAnswer) {
                 const val = savedText[index] || "";
                 htmlSnippet += `
                     <div style="margin-bottom: 10px;">
-                        <input type="text" name="${question.id}_${index}" value="${val}" placeholder="${opt.text}" style="width: 100%; padding: 8px; box-sizing: border-box;">
+                        <input type="text" name="${question.id}_${index}" onkeydown="if(event.key === 'Enter') { this.blur(); }" value="${val}" placeholder="${opt.text}" style="width: 100%; padding: 8px; box-sizing: border-box;">
                     </div>
                 `;
             });
+            console.log(savedAnswer);
             break;
         case "DATE":
             const val = savedAnswer || "";
