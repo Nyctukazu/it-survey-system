@@ -44,3 +44,44 @@ export function saveCurrentAnswers() {
     });
     console.log(finalSurveyData);
 }
+
+export function prepareDataForBackend() {
+    const answersMap = finalSurveyData.answers;
+
+    const formattedAnswers = Object.keys(answersMap).map(questionId => {
+        let value = answersMap[questionId];
+        const finalValue = Array.isArray(value) ? value.join(", ") : value;
+
+        return {
+            responseValue: finalValue,
+            question: { id: parseInt(questionId) }
+        };
+    });
+
+    return formattedAnswers;
+}
+
+export async function submitSurvey() {
+    saveCurrentAnswers();
+    const dataToSend = prepareDataForBackend();
+    
+    try {
+        const response = await fetch('http://localhost:8080/api/answers', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dataToSend)
+        });
+
+        if (response.ok) {
+            console.log("Survey Submitted!");
+            goToNextPage();
+
+        } else {
+            const errorText = await response.text();
+            alert("Submittion failed: " + errorText);
+        }
+    } catch (error) {
+        console.error("Connection error:", error);
+        alert("Cannot reach the server. Make sure your Spring Boot app is running.");
+    }
+}

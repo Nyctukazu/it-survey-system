@@ -1,6 +1,6 @@
 import { fetchSurveyQuestions } from './api/surveyService.js';
 import { createQuestionHTML } from './surveyRenderer.js';
-import { saveCurrentAnswers, finalSurveyData } from './surveyManager.js';
+import { saveCurrentAnswers, finalSurveyData, submitSurvey } from './surveyManager.js';
 import { goToNextPage } from './event.js';
 
 export let currentPageIndex = 0; 
@@ -86,8 +86,10 @@ btnBack.addEventListener('click', () => {
 });
 
 // 7. Submit Button Logic
-btnSubmit.addEventListener('click', () => {
+btnSubmit.addEventListener('click', async (event) => {
+    event.preventDefault();
     saveCurrentAnswers(); 
+    await submitSurvey();
     console.log("SURVEY COMPLETE! READY FOR BACKEND:", finalSurveyData);
     alert("Survey finished! Check your console for the final data.");
 });

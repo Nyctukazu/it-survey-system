@@ -1,4 +1,3 @@
-export function goToNextPage(event) {
-    event.preventDefault();
+export function goToNextPage() {
     window.location.href = 'end.html';
 }
