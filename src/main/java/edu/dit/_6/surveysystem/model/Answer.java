@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
@@ -31,6 +32,12 @@ public class Answer {
     @JsonIdentityReference(alwaysAsId = true)
     private Question question;
 
+    @ManyToOne
+    @JoinColumn(name = "response_id")
+    @JsonIgnore
+    private SurveyResponse surveyResponse;
+
+
     public Answer() { }
 
     // Getters and Setters
@@ -43,5 +50,7 @@ public class Answer {
     public Question getQuestion() { return question; }
     public void setQuestion(Question question) { this.question = question; }
 
+    public SurveyResponse getSurveyResponse() { return surveyResponse; }
+    public void setSurveyResponse(SurveyResponse surveyResponse) { this.surveyResponse = surveyResponse; }
     
 }

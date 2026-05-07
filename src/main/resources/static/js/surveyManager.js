@@ -63,13 +63,17 @@ export function prepareDataForBackend() {
 
 export async function submitSurvey() {
     saveCurrentAnswers();
-    const dataToSend = prepareDataForBackend();
+    const surveySubmission = {
+        respondentName: document.getElementById('userName').value || "Anonymous",
+        answers: prepareDataForBackend()
+
+    }
     
     try {
-        const response = await fetch('http://localhost:8080/api/answers', {
+        const response = await fetch('http://localhost:8080/api/responses', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(dataToSend)
+            body: JSON.stringify(surveySubmission)
         });
 
         if (response.ok) {
