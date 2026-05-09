@@ -3,71 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Disaster Preparedness Survey</title>
-    <link rel="stylesheet" href="css/main.css">
+    <title>Disaster Risk Management Survey</title>
+    <link rel="stylesheet" href="/main.css">
 </head>
 <body>
-    <div class="survey-container">
-        <!-- HEADER (Unchanged) -->
-        <header class="survey-header">
-            <div class="header-left">
-                <h1>DISASTER<br>PREPAREDNESS<br>SURVEY</h1>
+
+    <aside id="sidebar" class="sidebar">
+        <button id="close-sidebar" class="close-btn">&times;</button>
+        <ul class="sidebar-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#home">Surveys</a></li>
+            <li><a href="#about">About Page</a></li>
+            <li><a href="#home">Settings</a></li>
+        </ul>
+    </aside>
+
+    <div id="landing-page">
+        <nav class="top-nav">
+            <div class="logo">Logo</div>
+            
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#privacy">Privacy</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="hamburger" id="hamburger-menu">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
             </div>
-            <div class="header-right">
-                <form>
-                <div class="input-row">
-                    <label>Name:</label>
-                    <input type="text" id="userName">
-                </div>
-                <div class="input-row">
-                    <label>Age:</label>
-                    <input type="text" id="userAge">
-                </div>
-                <div class="input-row">
-                    <label>Contact Information:</label>
-                    <input type="text" id="userContact">
-                </div>
-                <div class="input-row">
-                    <label>Form Number:</label>
-                    <span class="form-number-text">000001</span>
-                </div>
-                </form>
+            
+        </nav>
+
+        <header id="home" class="hero-section">
+            <div class="hero-image-placeholder">Hero Image</div>
+            <div class="hero-content">
+                <h1 class="serif-title">Welcome to Our Community Survey</h1>
+                <p>Learn more about disaster readiness and local tourism</p>
+                <button id="btn-go-to-survey" class="action-btn">Take the Survey</button>
             </div>
         </header>
 
-        <!-- BODY -->
-        <main class="survey-body">
-            <form onkeydown="if(event.key === 'Enter') { event.preventDefault(); return false; }">
-            <!-- STEP 1: Demographics -->
-            <section id="step-demographics" class="form-section">
-                <form>
-                <h2>Household Information:</h2>
-                <label class="block-label">Address:</label>
-                <input type="text" id="userAddress" class="full-width-input">
-                <label class="block-label">Family Members:</label>
-                <textarea id="familyMembers" class="full-width-input" rows="2"></textarea>
-                </form>
-                <button type="button" id="btn-start-survey">Start Survey</button>
-            </section>
+        <section id="about" class="page-section">
+            <h2 class="serif-title">About us</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="laurence.jpg" alt="Laurence" class="avatar-img">
+                    <p>BackEnd | Laurence Ryan Cruz</p>
+                </div>
+                <div class="team-member">
+                    <img src="rhey.jpg" alt="Rhey" class="avatar-img">
+                    <p>FrontEnd | Rhey Santos</p>
+                </div>
+                <div class="team-member">
+                    <img src="alphonse.jpg" alt="Alphonse" class="avatar-img">
+                    <p>QA | Alphonse Ganapao</p>
+                </div>
+                <div class="team-member">
+                    <img src="elaine.jpg" alt="Elaine" class="avatar-img">
+                    <p>UI | Elaine Lara Balauro</p>
+                </div>
+                <div class="team-member">
+                    <img src="kai.jpg" alt="Kai" class="avatar-img">
+                    <p>UX | Kai Yin Leo</p>
+                </div>
+            </div>
+        </section>
 
-            <!-- STEP 2: The Reusable Survey Shell (Hidden at first) -->
-            <section id="step-survey" class="form-section hidden">
-                <!-- JS will update this title for every page -->
-                <h2 id="dynamic-page-title">Page Title</h2>
+        <section id="privacy" class="page-section bg-light">
+            <h2 class="serif-title">Privacy Policy</h2>
+        </section>
+
+        <footer id="contact" class="contact-section">
+            <h2 class="serif-title text-white">Contact us</h2>
+            <ul class="contact-info">
+                <li>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    Telephone Number : +63 283-555-0923
+                </li>
+                <li>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                    Cellphone Contact : +63 0925-505-9865
+                </li>
+                <li>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    Email Address : GroupIIISurveyInfo@gmail.com
+                </li>
+                <li>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                    Twitter : GroupIIISurveyInfomation
+                </li>
+                <li>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                    Facebook : GroupIIISurveyInfo Inc.
+                </li>
+                <li>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    Instagram : GroupIIISurveyInfo Inc.
+                </li>
+            </ul>
+            <p class="copyright">© 2026 | Group 3 | Web Development</p>
+        </footer>
+    </div>
+
+    <div id="survey-app" class="hidden bg-light">
+        
+        <nav class="app-nav">
+            <img src="logo.png" alt="Survey Logo" class="logo">
+            <div class="app-title">Disaster Risk Management for Tourism Areas Survey</div>
+            <div class="step-indicator" id="step-indicator">Step 1 of 4</div>
+            <div class="hamburger">
+                <div class="line"></div><div class="line"></div><div class="line"></div>
+            </div>
+        </nav>
+
+        <main class="survey-body">
+            <section id="step-privacy" class="form-section">
+                <h1 class="serif-title" style="margin-bottom: 20px;">Data Privacy Notice and Consent Form</h1>
+                <div class="privacy-card">
+                    <p>[Organization/Researcher Name] values your privacy and is committed to protecting your personal data in accordance with Republic Act No. 10173, also known as the Data Privacy Act of 2012 (DPA).</p>
+                    
+                    <p>Through this survey, we may collect the following information:</p>
+                    <ul>
+                        <li>Personal Information: [e.g., Name, email address, age, gender, occupation].</li>
+                        <li>Sensitive Personal Information: [e.g., Marital status, health information, or religious affiliation—remove if not applicable].</li>
+                        <li>Technical Data: [e.g., IP address, browser type, or timestamps—if using an online platform].</li>
+                    </ul>
+                    
+                    <p>The data collected will be used solely for:<br>
+                    [e.g., Academic research regarding local consumer habits].<br>
+                    [e.g., Improving our company's customer service experience].<br>
+                    [e.g., Statistical analysis and reporting].</p>
+                    
+                    <p>Disclosure: Your personal information will not be shared with third parties without your explicit consent, unless required by law.</p>
+                    
+                    <p>Retention: We will store your data for a period of [e.g., one (1) year] or until the purpose of this survey is fulfilled, after which it will be securely destroyed or anonymized.</p>
+                    
+                    <p>Under the DPA, you have the right to be informed, to object to processing, to access and rectify your data, and to request its erasure. For any concerns or to exercise these rights, please contact our Data Protection Officer at:</p>
+                    <ul>
+                        <li>Email: [insert email address]</li>
+                        <li>Phone: [insert phone number]</li>
+                    </ul>
+                    
+                    <p>By clicking "I Agree" or proceeding with this survey, you acknowledge that:</p>
+                    <ol>
+                        <li>You have read and understood this Privacy Notice.</li>
+                        <li>You provide your free, specific, and informed consent to the collection and processing of your personal data as described above.</li>
+                        <li>You are participating voluntarily and may withdraw your consent at any time by closing this survey.</li>
+                    </ol>
+                    
+                    <div class="consent-options">
+                        <label><input type="radio" name="consent" value="agree" id="consent-agree"> I Agree</label>
+                        <label><input type="radio" name="consent" value="disagree"> I Disagree</label>
+                    </div>
+                </div>
                 
-                <!-- JS will inject the questions for the current page here -->
-                <div id="dynamic-questions-container"></div>
-                <!-- Grouped Navigation Buttons -->
                 <div class="button-group">
-                    <button type="button" id="btn-back-page" class="hidden">Back</button>
-                    <button type="button" id="btn-next-page">Next Page</button>
-                    <button type="submit" id="btn-submit" class="hidden">Submit Survey</button>
+                    <button id="btn-privacy-back" class="action-btn-outline">Back</button>
+                    <button id="btn-privacy-next" class="action-btn">Next</button>
                 </div>
             </section>
-            </form>
+
+            <section id="step-demographics" class="form-section hidden">
+                <h1 class="serif-title" style="margin-bottom: 20px;">Personal Information</h1>
+                <div class="input-card">
+                    <label class="block-label">Name:</label>
+                    <input type="text" id="userName" class="full-width-input">
+                    
+                    <label class="block-label">Age:</label>
+                    <input type="number" id="userAge" class="full-width-input">
+                    
+                    <label class="block-label">Contact Number:</label>
+                    <input type="text" id="userContact" class="full-width-input">
+
+                    <label class="block-label">Address:</label>
+                    <input type="text" id="userAddress" class="full-width-input">
+
+                    <label class="block-label">Gender:</label>
+                    <select id="userGender" class="full-width-input">
+                        <option value="">Select...</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Prefer not to say">Prefer not to say</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button id="btn-demo-back" class="action-btn-outline">Back</button>
+                    <button id="btn-demo-next" class="action-btn">Next</button>
+                </div>
+            </section>
+
+            <section id="step-survey" class="form-section hidden">
+                <h1 class="serif-title" id="dynamic-page-title" style="margin-bottom: 20px;">Page Title</h1>
+                <div id="dynamic-questions-container"></div>
+                
+                <div class="button-group">
+                    <button id="btn-back-page" class="action-btn-outline">Back</button>
+                    <button id="btn-next-page" class="action-btn">Next</button>
+                    <button id="btn-submit" class="action-btn hidden">Submit</button>
+                </div>
+            </section>
         </main>
     </div>
-    <script type="module" src="js/main.js"></script>
-   
+
+    <script type="module" src="/main.js"></script>
 </body>
 </html>

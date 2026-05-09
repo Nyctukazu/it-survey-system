@@ -1,9 +1,114 @@
 <!DOCTYPE html>
-<html xlmns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Admin Page</title>
-    </head>
-    <body>
-        <h1>Hello There</h1>
-    </body>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <link rel="stylesheet" th:href="@{/admin.css}">
+</head>
+<body>
+
+    <div id="login-view" class="login-container">
+        <div class="login-card">
+            <svg class="shield-icon" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <h2 class="serif-title" style="text-align: center; margin-bottom: 30px;">Admin Login</h2>
+            
+            <div class="input-group"><span class="icon">✉️</span><input type="text" id="admin-username" placeholder="Username"></div>
+            <div class="input-group"><span class="icon">🔒</span><input type="password" id="admin-password" placeholder="Password"></div>
+            <button id="btn-login" class="action-btn" style="width: 100%; margin-top: 20px;">Login</button>
+        </div>
+    </div>
+
+    <div id="admin-app" class="admin-layout hidden">
+        
+        <aside class="admin-sidebar">
+            <div class="sidebar-logo">❖ Sidebar</div>
+            <ul class="sidebar-nav">
+                <li><a href="#" data-target="view-dashboard" class="active">Dashboard</a></li>
+                <li><a href="#" data-target="view-editor">Survey Editor</a></li>
+                <li><a href="#" data-target="view-settings">Settings</a></li>
+            </ul>
+        </aside>
+
+        <main class="admin-main">
+            <nav class="admin-topbar">
+                <div class="logo" style="font-weight: bold; font-size: 1.5rem;">Logo</div>
+                <div class="topbar-right">
+                    <button id="btn-logout" class="text-btn">Log Out</button>
+                    <div class="hamburger"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+                </div>
+            </nav>
+
+            <div class="admin-content">
+                
+                <section id="view-dashboard" class="admin-section">
+                    <div class="dashboard-grid">
+                        <div class="widget-card"><h3 class="serif-title">Preparedness</h3><canvas id="pieChart"></canvas></div>
+                        <div class="widget-card"><h3 class="serif-title">Tourism Ratings</h3><canvas id="barChart"></canvas></div>
+                        <div class="widget-card map-widget"><h3 class="serif-title">Areas</h3><div id="surveyMap" style="height: 250px; border-radius: 8px;"></div></div>
+                    </div>
+
+                    <div class="widget-card" style="margin-top: 30px;">
+                        <h3 class="serif-title">Recent Events</h3>
+                        <ul class="recent-list">
+                            <li th:each="event : ${recentEvents}" th:text="${event}">
+                                (Placeholder if no data is found)
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="view-editor" class="admin-section hidden">
+                    <h2 class="serif-title" style="margin-bottom: 20px;">My Surveys</h2>
+                    <div class="widget-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h3>Current Active Questions</h3>
+                            <button class="action-btn" style="padding: 10px 20px; margin: 0;">+ Add Question</button>
+                        </div>
+                        
+                        <table class="data-table">
+                            <thead><tr><th>ID</th><th>Question</th><th>Type</th><th>Actions</th></tr></thead>
+                            <tbody>
+                                <tr th:each="question : ${surveyQuestions}">
+                                    <td th:text="${question.id}">1</td>
+                                    <td th:text="${question.content}">Sample Question?</td>
+                                    <td th:text="${question.type}">RADIO</td>
+                                    <td><button class="text-btn">Edit</button> | <button class="text-btn" style="color: red;">Delete</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section id="view-settings" class="admin-section hidden">
+                    <h2 class="serif-title" style="margin-bottom: 20px;">Settings</h2>
+                    <div class="settings-layout">
+                        <div class="settings-menu">
+                            <button class="settings-tab active">Profile and Security</button>
+                        </div>
+                        <div class="settings-content widget-card">
+                            <div class="profile-card">
+                                <h3 style="border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 15px; margin-bottom: 15px;">Profile and Security</h3>
+                                
+                                <p><strong>Account Name :</strong> <span th:text="${adminName}">Juan Dela Cruz</span></p>
+                                <p><strong>Account Email :</strong> <span th:text="${adminEmail}">JuanDelaCruz@gmail.com</span></p>
+                                
+                                <p><strong>Account Status :</strong> Administrator</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script type="module" th:src="@{/admin.js}"></script>
+</body>
 </html>

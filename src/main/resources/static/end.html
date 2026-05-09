@@ -1,9 +1,46 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>End Page</title>
-    </head>
-    <body>
-        <h1>Thank you for answering our survey!</h1>
-    </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Complete</title>
+    <link rel="stylesheet" href="/main.css">
+    <style>
+        /* Specific styles just for the End Page */
+        body { background-color: var(--bg-light); display: flex; align-items: center; justify-content: center; height: 100vh; }
+        .end-card { background: white; padding: 60px 40px; border-radius: 12px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 600px; width: 100%; }
+        
+        /* CSS to draw the Green Checkmark from Figma! */
+        .checkmark-circle {
+            width: 120px; height: 120px; border-radius: 50%;
+            background-color: var(--brand-green); margin: 0 auto 30px auto;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .checkmark-circle::after {
+            content: ""; display: block; width: 30px; height: 60px;
+            border: solid white; border-width: 0 10px 10px 0;
+            transform: rotate(45deg); margin-top: -15px;
+        }
+        
+        .sub-text { color: #666; margin-bottom: 40px; }
+        
+        .end-buttons { display: flex; justify-content: center; gap: 20px; }
+        .btn-gray { background-color: #d9d9d9; color: #333; border: none; padding: 15px 30px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        .btn-gray:hover { background-color: #c0c0c0; }
+    </style>
+</head>
+<body>
+
+    <div class="end-card">
+        <div class="checkmark-circle"></div>
+        <h1 class="serif-title">Thank You for Your Participation!</h1>
+        <p class="sub-text">Your responses have been submitted.</p>
+        
+        <div class="end-buttons">
+            <button class="btn-gray" onclick="window.location.href='index.html'">Return to Home</button>
+            <button class="btn-gray" onclick="window.location.href='feedback.html'">Leave a Feedback</button>
+        </div>
+    </div>
+
+</body>
 </html>
