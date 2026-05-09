@@ -16,13 +16,14 @@ import java.util.List;
 import java.util.ArrayList;
 
 @Entity
-@JsonPropertyOrder({ "id", "content", "type", "choices", "answer", "surveyForm"})
+@JsonPropertyOrder({ "id", "content", "type", "isRequired", "choices", "answer", "surveyForm"})
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
     private String type;
+    private Boolean isRequired;
 
     @ManyToOne
     @JoinColumn(name = "survey_form_id")
@@ -49,6 +50,9 @@ public class Question {
 
     public String getType() { return type; }
     public void setType(String type) { this.type = type; }
+
+    public Boolean getIsRequired() { return isRequired; }
+    public void setIsRequired(Boolean isRequired) { this.isRequired = isRequired; }
 
     public List<Choice> getChoices() { return choices; }
     public void setChoices(List<Choice> choices) { this.choices = choices; }

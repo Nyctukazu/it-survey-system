@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 @Entity
-@JsonPropertyOrder({ "id", "respondentName", "submittedDate" })
+@JsonPropertyOrder({ "id", "respondentName", "respondentEmail", "submittedDate" })
 public class SurveyResponse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +24,8 @@ public class SurveyResponse {
 
     private String respondentName;
     private LocalDateTime submittedDate = LocalDateTime.now();
+    @Column(unique = true, nullable = false)
+    private String respondentEmail;
 
     @OneToMany(mappedBy = "surveyResponse", cascade = CascadeType.ALL)
     private List<Answer> answers = new ArrayList();
@@ -36,6 +39,9 @@ public class SurveyResponse {
 
     public LocalDateTime getSubmittedDate() { return submittedDate; }
     public void setSubmittedDate(LocalDateTime submittedDate) { this.submittedDate = submittedDate; }
+
+    public String getRespondentEmail() { return respondentEmail; }
+    public void setRespondentEmail(String respondentEmail) { this.respondentEmail = respondentEmail; }
 
     public List<Answer> getAnswers() { return answers; }
     public void setAnswers(List<Answer> answers) { this.answers = answers; }
