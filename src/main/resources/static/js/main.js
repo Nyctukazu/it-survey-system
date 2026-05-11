@@ -1,7 +1,8 @@
-import { fetchSurveyQuestions } from './api/surveyService.js';
-import { createQuestionHTML } from './surveyRenderer.js';
-import { saveCurrentAnswers, finalSurveyData, submitSurvey } from './surveyManager.js';
-import { goToNextPage } from './event.js';
+import { fetchSurveyQuestions } from './api/surveyApi.js';
+import { createQuestionHTML } from './components/surveyRenderer.js';
+import { saveCurrentAnswers, finalSurveyData, submitSurvey } from './services/surveyManager.js';
+import { goToNextPage } from './routes/event.js';
+import { getOrganizedSurveys } from './services/surveyService.js';
 
 
 export let currentPageIndex = 0; 
@@ -116,7 +117,7 @@ btnDemoNext.addEventListener('click', async () => {
     //Error handling from getting a file from the backend
     try {
         btnDemoNext.innerText = "Loading...";
-        surveyPages = await fetchSurveyQuestions();
+        surveyPages = await getOrganizedSurveys();
     
         stepDemographics.classList.add('hidden');
         stepSurvey.classList.remove('hidden');
