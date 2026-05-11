@@ -17,9 +17,9 @@ public class SurveyResponseService {
 
     @Transactional
     public SurveyResponse saveFullResponse(SurveyResponse response) {
-        if (responseRepo.existsByRespondentEmail(response.getRespondentEmail())) {
+        /*if (responseRepo.existsByRespondentEmail(response.getRespondentEmail())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already submitted");
-        }
+        }*/
         if (response.getAnswers() != null) {
             for (Answer answer : response.getAnswers()) {
                 answer.setSurveyResponse(response);
