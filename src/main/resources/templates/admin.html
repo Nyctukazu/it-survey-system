@@ -4,19 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Lora:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    
-    <link rel="stylesheet" th:href="@{css/admin.css}">
+    <link rel="stylesheet" th:href="@{admin/css/admin.css}">
 </head>
 <body>
 
     <div id="login-view" class="login-container">
         <div class="login-card">
             <svg class="shield-icon" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-            <h2 class="serif-title" style="text-align: center; margin-bottom: 30px;">Admin Login</h2>
-            
             <div class="input-group"><span class="icon">✉️</span><input type="text" id="admin-username" placeholder="Username"></div>
             <div class="input-group"><span class="icon">🔒</span><input type="password" id="admin-password" placeholder="Password"></div>
             <button id="btn-login" class="action-btn" style="width: 100%; margin-top: 20px;">Login</button>
@@ -25,8 +20,11 @@
 
     <div id="admin-app" class="admin-layout hidden">
         
-        <aside class="admin-sidebar">
-            <div class="sidebar-logo">❖ Sidebar</div>
+        <aside id="sidebar" class="admin-sidebar">
+            <div style="display: flex; justify-content: space-between; padding: 30px 20px;">
+                <div class="sidebar-logo" style="padding: 0;">❖ Sidebar</div>
+                <button id="close-sidebar" style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;">&times;</button>
+            </div>
             <ul class="sidebar-nav">
                 <li><a href="#" data-target="view-dashboard" class="active">Dashboard</a></li>
                 <li><a href="#" data-target="view-editor">Survey Editor</a></li>
@@ -36,52 +34,154 @@
 
         <main class="admin-main">
             <nav class="admin-topbar">
-                <div class="logo" style="font-weight: bold; font-size: 1.5rem;">Logo</div>
+                <img th:src="@{/images/logo.png}" alt="Website Logo" style="height: 40px; width: auto; object-fit: contain;">
                 <div class="topbar-right">
+                    <button id="btn-nav-feedback" class="text-btn">Feedback</button>
+                    <button id="btn-nav-surveys" class="text-btn">Surveys</button>
                     <button id="btn-logout" class="text-btn">Log Out</button>
-                    <div class="hamburger"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+                    <div class="hamburger" id="hamburger-menu">
+                        <div class="line"></div><div class="line"></div><div class="line"></div>
+                    </div>
                 </div>
             </nav>
 
             <div class="admin-content">
                 
                 <section id="view-dashboard" class="admin-section">
+                    <h2 class="serif-title" style="border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-top: 0;">Dashboard</h2>
+                    
                     <div class="dashboard-grid">
-                        <div class="widget-card"><h3 class="serif-title">Preparedness</h3><canvas id="pieChart"></canvas></div>
-                        <div class="widget-card"><h3 class="serif-title">Tourism Ratings</h3><canvas id="barChart"></canvas></div>
-                        <div class="widget-card map-widget"><h3 class="serif-title">Areas</h3><div id="surveyMap" style="height: 250px; border-radius: 8px;"></div></div>
-                    </div>
-
-                    <div class="widget-card" style="margin-top: 30px;">
-                        <h3 class="serif-title">Recent Events</h3>
-                        <ul class="recent-list">
-                            <li th:each="event : ${recentEvents}" th:text="${event}">
-                                (Placeholder if no data is found)
-                            </li>
-                        </ul>
-                    </div>
-                </section>
-
-                <section id="view-editor" class="admin-section hidden">
-                    <h2 class="serif-title" style="margin-bottom: 20px;">My Surveys</h2>
-                    <div class="widget-card">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                            <h3>Current Active Questions</h3>
-                            <button class="action-btn" style="padding: 10px 20px; margin: 0;">+ Add Question</button>
+                        <div class="widget-card">
+                            <p class="chart-title">Total Responses</p>
+                            <h2 class="chart-number">158</h2>
+                            <canvas id="barChart"></canvas>
                         </div>
-                        
+                        <div class="widget-card">
+                            <p class="chart-title">Survey 1 Total Responses</p>
+                            <h2 class="chart-number">84</h2>
+                            <canvas id="lineChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="widget-card" style="margin-bottom: 30px;">
+                        <p style="margin-top: 0; font-size: 0.9rem; font-weight: bold;">Survey 1</p>
                         <table class="data-table">
-                            <thead><tr><th>ID</th><th>Question</th><th>Type</th><th>Actions</th></tr></thead>
+                            <thead>
+                                <tr>
+                                    <th style="padding: 10px 15px; border-bottom: 2px solid #eee; color: #555;">Respondent Name</th>
+                                    <th style="padding: 10px 15px; border-bottom: 2px solid #eee; color: #555;">Date Submitted</th>
+                                </tr>
+                            </thead>
                             <tbody>
-                                <tr th:each="question : ${surveyQuestions}">
-                                    <td th:text="${question.id}">1</td>
-                                    <td th:text="${question.content}">Sample Question?</td>
-                                    <td th:text="${question.type}">RADIO</td>
-                                    <td><button class="text-btn">Edit</button> | <button class="text-btn" style="color: red;">Delete</button></td>
+                                <tr>
+                                    <td style="border-bottom: 1px solid #eee;">Juan Dela Cruz</td>
+                                    <td style="border-bottom: 1px solid #eee;">May 11, 2026</td>
+                                </tr>
+                                <tr>
+                                    <td style="border-bottom: 1px solid #eee;">Maria Santos</td>
+                                    <td style="border-bottom: 1px solid #eee;">May 10, 2026</td>
+                                </tr>
+                                <tr>
+                                    <td>Leo Kai</td>
+                                    <td>May 09, 2026</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
+
+                    <h3 id="section-surveys" class="serif-title" style="border-bottom: 1px solid #ccc; padding-bottom: 10px;">My Surveys</h3>
+                    
+                    <div class="survey-slider-container">
+                        <div class="survey-slider">
+                            <div class="survey-card">
+                                <h4>Survey 1</h4>
+                                <p>A survey for Disaster Risk Reduction</p>
+                                <button class="text-btn edit-survey-btn" data-title="Survey 1">Edit</button>
+                            </div>
+                            <div class="survey-card">
+                                <h4>Survey 2</h4>
+                                <p>A survey for Disaster Risk Reduction</p>
+                                <button class="text-btn edit-survey-btn" data-title="Survey 2">Edit</button>
+                            </div>
+                            <div class="survey-card">
+                                <h4>Survey 3</h4>
+                                <p>A survey for Disaster Risk Reduction</p>
+                                <button class="text-btn edit-survey-btn" data-title="Survey 3">Edit</button>
+                            </div>
+                            <div class="survey-card">
+                                <h4>Survey 4</h4>
+                                <p>A survey for Disaster Risk Reduction</p>
+                                <button class="text-btn edit-survey-btn" data-title="Survey 4">Edit</button>
+                            </div>
+                            <div class="survey-card">
+                                <h4>Survey 5</h4>
+                                <p>A survey for Disaster Risk Reduction</p>
+                                <button class="text-btn edit-survey-btn" data-title="Survey 5">Edit</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 id="section-feedback" class="serif-title" style="border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-top: 40px;">Feedback Channel</h3>
+                    
+                    <div class="feedback-list">
+                        <div class="feedback-card">
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                                <span style="font-size: 1rem;">Anonymous</span>
+                                <span style="color: var(--brand-accent); font-size: 1.5rem; letter-spacing: 2px;">★★★★<span style="color: white;">☆</span></span>
+                            </div>
+                            <p style="margin: 0; font-size: 0.8rem; font-weight: bold; color: white;">Comment:</p>
+                            <p style="margin: 5px 0 0 0; font-size: 0.85rem; color: #e0e0e0; line-height: 1.4;">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            </p>
+                        </div>
+
+                        <div class="feedback-card">
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                                <span style="font-size: 1rem;">Anonymous</span>
+                                <span style="color: var(--brand-accent); font-size: 1.5rem; letter-spacing: 2px;">★★★★★</span>
+                            </div>
+                            <p style="margin: 0; font-size: 0.8rem; font-weight: bold; color: white;">Comment:</p>
+                            <p style="margin: 5px 0 0 0; font-size: 0.85rem; color: #e0e0e0; line-height: 1.4;">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    
+                </section>
+                <div class="admin-footer">
+                        <p>© 2026 | Group 3 | Web Development</p>
+                </div>
+
+                <section id="view-editor" class="admin-section hidden">
+                    
+                    <div class="editor-toolbar">
+                        <button id="btn-save-survey" class="icon-btn" title="Save">💾</button>
+                        <button id="btn-delete-question" class="icon-btn" style="color: #ff4d4d;" title="Delete">🗑️</button>
+                    </div>
+                    
+                    <div class="editor-title-container" style="display: flex; align-items: center; margin: 20px 0;">
+                        <h1 id="editor-survey-title" class="serif-title" style="margin: 0; color: var(--nav-bg);">Survey 1</h1>
+                        <div class="title-dropdown-wrapper" style="position: relative; margin-left: 10px;">
+                            <button id="btn-title-dropdown" class="icon-btn" style="color: var(--nav-bg); font-size: 1.2rem; margin-top: 5px;" title="Switch Survey">▼</button>
+                            <ul id="editor-title-dropdown-list" class="dropdown-menu hidden">
+                                </ul>
+                        </div>
+                    </div>
+                    
+                    <div id="editor-questions-container">
+                    </div>
+
+                    <div class="editor-bottom-bar" style="margin-top: 20px;">
+                        <div class="page-types">
+                            <button class="pill-btn">Privacy Notice</button>
+                            <button class="pill-btn">Personal Info</button>
+                            <button class="pill-btn active">Environment</button>
+                            <button class="pill-btn">Likert Scale</button>
+                        </div>
+                        <button id="btn-add-page" class="text-btn" style="color: var(--brand-accent);">+ Add page</button>
+                    </div>
+                    
                 </section>
 
                 <section id="view-settings" class="admin-section hidden">
@@ -92,11 +192,9 @@
                         </div>
                         <div class="settings-content widget-card">
                             <div class="profile-card">
-                                <h3 style="border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 15px; margin-bottom: 15px;">Profile and Security</h3>
-                                
+                                <h3 style="border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 15px; margin-bottom: 15px; display: flex; justify-content: space-between;">Profile and Security <button id="btn-settings-back" class="btn-gray">Back</button></h3>
                                 <p><strong>Account Name :</strong> <span th:text="${adminName}">Juan Dela Cruz</span></p>
                                 <p><strong>Account Email :</strong> <span th:text="${adminEmail}">JuanDelaCruz@gmail.com</span></p>
-                                
                                 <p><strong>Account Status :</strong> Administrator</p>
                             </div>
                         </div>
@@ -108,7 +206,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script type="module" th:src="@{js/admin.js}"></script>
+    <script type="module" th:src="@{admin/js/admin.js}"></script>
 </body>
 </html>

@@ -8,9 +8,9 @@
 }
 
 :root {
-    --nav-bg: #003853;       /* Deep Blue from Figma */
-    --brand-green: #8cb824;  /* Green button from Figma */
-    --bg-light: #f5f5f5;     /* Light gray background */
+    --nav-bg: #003554;       /* Deep Blue from Figma */
+    --brand-green: #90B918;  /* Green button from Figma */
+    --bg-light: #f8f9fa;     /* Light gray background */
     --text-dark: #333333;
 }
 
@@ -43,7 +43,19 @@ html {
 /* =========================================
    2. LANDING PAGE STYLES
    ========================================= */
-.top-nav {
+.image-credit {
+    font-size: 12px;
+    color: #666;
+    text-align: right;
+    margin-top: 5px;
+    padding-right: 10px;
+}
+.image-credit a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+.top-nav, .app-nav {
     background-color: var(--nav-bg);
     color: white;
     display: flex;
@@ -53,6 +65,7 @@ html {
     position: sticky;
     top: 0;
     z-index: 100;
+    border-bottom: solid 0.1px var(--bg-light);
 }
 
 .logo {
@@ -65,6 +78,13 @@ html {
     display: flex;
     gap: 30px;
     margin: 0;
+    a {
+        padding: 20px;
+        border-radius: 25px;
+    }
+}
+.nav-links :hover {
+    background-color: #004e74;
 }
 
 .nav-right {
@@ -76,6 +96,7 @@ html {
 .nav-links a {
     color: white;
     text-decoration: none;
+
 }
 
 .hamburger {
@@ -97,7 +118,8 @@ html {
     height: 400px; /* Adjust height as needed */
     
     /* Add your image file name here! */
-    background-image: url('hero-image.jpg'); 
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
+url('https://rowiewanderlist.wordpress.com/wp-content/uploads/2015/11/img_2834.jpg'); 
     
     background-size: cover; /* This makes the image fill the box perfectly */
     background-position: center; /* This keeps the image centered */
@@ -141,12 +163,12 @@ html {
 .team-member { width: 250px; text-align: center; }
 .centered-member { width: 100%; }
 
-.avatar {
+.avatar-img {
     width: 80px; height: 80px;
     background-color: #222;
     border-radius: 50%;
     margin: 0 auto 15px auto;
-    box-shadow: 0 40px 0 20px #222; 
+    box-shadow: 0 10px 0 1px #222; 
     clip-path: inset(0 0 -50px 0 round 0 0 20px 20px);
 }
 
@@ -195,23 +217,45 @@ html {
     width: 250px; height: 100vh;
     background-color: var(--nav-bg); color: white;
     transition: right 0.3s ease-in-out; z-index: 200; padding: 60px 20px;
+    border-left: solid 1px var(--bg-light); 
 }
-.sidebar.open { right: 0; }
-.close-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; color: white; font-size: 2rem; cursor: pointer; }
-.sidebar-links { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 30px; text-align: center; }
-.sidebar-links a { color: white; text-decoration: none; font-size: 1.1rem; }
+.sidebar.open { 
+    right: 0; 
+}
+.close-btn { 
+    position: absolute; 
+    top: 20px; right: 20px; 
+    background: none; 
+    border: none; 
+    color: white; 
+    font-size: 2rem; 
+    cursor: pointer; 
+}
+.sidebar-links { 
+    list-style: none; 
+    padding: 0; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 30px; 
+    text-align: center; 
+}
+
+.sidebar-links li :hover{
+    background-color: #004e74;
+}
+.sidebar-links a { 
+    color: white; 
+    text-decoration: none; 
+    font-size: 1.1rem; 
+    padding: 10px;
+    border-radius: 25px;
+    width: 100%;
+
+}
 
 /* =========================================
    3. SURVEY APP & FORM STYLES
    ========================================= */
-.app-nav {
-    background-color: var(--nav-bg);
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 40px;
-}
 
 .survey-body {
     max-width: 800px;

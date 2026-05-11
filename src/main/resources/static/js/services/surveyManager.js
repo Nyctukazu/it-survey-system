@@ -1,5 +1,6 @@
-import { surveyPages } from './main.js';
-import { currentPageIndex } from './main.js';
+import { surveyPages } from '../main.js';
+import { currentPageIndex } from '../main.js';
+import { postSurveyResults } from '../api/surveyApi.js';
 
 export const finalSurveyData = { demographics: {}, answers: {} };
 
@@ -70,20 +71,7 @@ export async function submitSurvey() {
     }
     
     try {
-        const response = await fetch('http://localhost:8080/api/responses', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(surveySubmission)
-        });
-
-        if (response.ok) {
-            console.log("Survey Submitted!");
-            goToNextPage();
-
-        } else {
-            const errorText = await response.text();
-            alert("Submittion failed: " + errorText);
-        }
+        await postSurveyResults(surveySubmission);
     } catch (error) {
         console.error("Connection error:", error);
         alert("Cannot reach the server. Make sure your Spring Boot app is running.");
