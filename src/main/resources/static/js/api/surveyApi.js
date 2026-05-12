@@ -1,5 +1,7 @@
 
 const survey_Url = 'http://localhost:8080/api/surveys';
+const response_Url = 'http://localhost:8080/api/responses';
+const feedback_Url = 'http://localhost:8080/api/feedback';
 
 export const fetchSurveyQuestions = async () => {
     try {
@@ -16,7 +18,7 @@ export const fetchSurveyQuestions = async () => {
 };
 
 export const postSurveyResults = async (submission) => {
-    const response = await fetch('http://localhost:8080/api/responses', {
+    const response = await fetch(`${response_Url}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(submission)
@@ -25,6 +27,23 @@ export const postSurveyResults = async (submission) => {
     if (response.ok) {
         console.log("Survey Submitted!");
         goToNextPage();
+
+    } else {
+        const errorText = await response.text();
+        alert("Submittion failed: " + errorText);
+    }
+}
+
+export const postFeedback = async (submission) => {
+    const response = await fetch(`${feedback_Url}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(submission)
+    });
+
+    if (response.ok) {
+        console.log("Feedback Submitted!");
+        window.location.href = 'index.html';
 
     } else {
         const errorText = await response.text();

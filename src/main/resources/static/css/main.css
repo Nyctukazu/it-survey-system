@@ -69,7 +69,7 @@ html {
 }
 
 .logo {
-    height: 40px; /* Adjust this to make your logo bigger or smaller */
+    height: 70px; /* Adjust this to make your logo bigger or smaller */
     width: auto;
 }
 
@@ -310,6 +310,9 @@ url('https://rowiewanderlist.wordpress.com/wp-content/uploads/2015/11/img_2834.j
 }
 .question-text { font-weight: bold; margin-bottom: 20px; }
 
-.question-block:nth-child(odd) { background-color: var(--nav-bg); color: white; }
-.question-block:nth-child(even) { background-color: #e5e5e5; color: #333; }
+.question-block { background-color: #e5e5e5; color: #333; }
 .options-container label { cursor: pointer; }
+
+#privacy {
+    text-align: left;
+}

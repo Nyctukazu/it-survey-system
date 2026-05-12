@@ -4,33 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leave Feedback</title>
-    <link rel="stylesheet" href="/main.css">
-    <style>
-        /* Centers the card perfectly on the screen */
-        body { 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            height: 100vh; 
-            background-color: var(--bg-light); 
-        }
-        .feedback-card { 
-            background: white; 
-            padding: 40px; 
-            border-radius: 12px; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
-            max-width: 500px; 
-            width: 100%; 
-        }
-        .feedback-card h2 { 
-            margin-top: 0; 
-            color: var(--nav-bg); 
-            margin-bottom: 10px;
-        }
-        .form-group { 
-            margin-bottom: 20px; 
-        }
-    </style>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/feedback.css">
 </head>
 <body>
 
@@ -40,12 +15,12 @@
 
         <div class="form-group">
             <label class="block-label">Name (Optional):</label>
-            <input type="text" id="feedbackName" class="full-width-input" placeholder="Anonymous">
+            <input type="text" id="feedbackName" name="respondentName" class="full-width-input" placeholder="Anonymous">
         </div>
 
         <div class="form-group">
             <label class="block-label">Your Comments:</label>
-            <textarea id="feedbackText" class="full-width-input" rows="5" placeholder="Type your feedback here..."></textarea>
+            <textarea id="feedbackText" name="comment" class="full-width-input" rows="5" placeholder="Type your feedback here..."></textarea>
         </div>
 
         <div class="button-group" style="margin-top: 20px;">
@@ -54,49 +29,7 @@
         </div>
     </div>
 
-    <script>
-        document.getElementById('btn-submit-feedback').addEventListener('click', async () => {
-            const nameField = document.getElementById('feedbackName').value || "Anonymous";
-            const textField = document.getElementById('feedbackText').value;
-
-            // Make sure they actually typed something!
-            if (textField.trim() === "") {
-                alert("Please enter some feedback before submitting.");
-                return;
-            }
-
-            // Change button text so the user knows it's working
-            const submitBtn = document.getElementById('btn-submit-feedback');
-            submitBtn.innerText = "Sending...";
-
-            // Package the data into JSON
-            const feedbackData = {
-                name: nameField,
-                comments: textField
-            };
-
-            try {
-                // Send it to your leader's Spring Boot backend!
-                const response = await fetch('http://localhost:8080/api/feedback', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(feedbackData)
-                });
-
-                if (response.ok) {
-                    alert("Thank you! Your feedback has been sent.");
-                    window.location.href = 'index.html'; // Send them back home
-                } else {
-                    alert("Oops! The server couldn't save your feedback. Try again later.");
-                    submitBtn.innerText = "Submit Feedback";
-                }
-            } catch (error) {
-                console.error("Connection error:", error);
-                alert("Cannot reach the server. Make sure the backend is running.");
-                submitBtn.innerText = "Submit Feedback";
-            }
-        });
-    </script>
+    <script type="module" src="js/services/feedbackService.js"></script>
 
 </body>
 </html>

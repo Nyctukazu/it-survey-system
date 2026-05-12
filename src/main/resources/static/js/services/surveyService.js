@@ -5,3 +5,4 @@ export const getOrganizedSurveys = async () => {
     // Do business logic here (like sorting by date)
     return data.sort((a, b) => b.id - a.id);
 };
+
