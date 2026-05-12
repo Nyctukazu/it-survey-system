@@ -2,6 +2,7 @@ import { postFeedback } from "../api/surveyApi.js";
 
 document.getElementById('btn-submit-feedback').addEventListener('click', async () => {
             const nameField = document.getElementById('feedbackName').value || "Anonymous";
+            const emailField = document.getElementById('feedbackEmail').value;
             const textField = document.getElementById('feedbackText').value;
             console.log(nameField);
             // Make sure they actually typed something!
@@ -17,6 +18,7 @@ document.getElementById('btn-submit-feedback').addEventListener('click', async (
             // Package the data into JSON
             const feedbackData = {
                 respondentName: nameField,
+                respondentEmail: emailField,
                 comment: textField
             };
 

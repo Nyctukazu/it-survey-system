@@ -1,6 +1,7 @@
 import { surveyPages } from '../main.js';
 import { currentPageIndex } from '../main.js';
 import { postSurveyResults } from '../api/surveyApi.js';
+import { getDemographicData } from './surveyService.js';
 
 export const finalSurveyData = { demographics: {}, answers: {} };
 
@@ -64,8 +65,9 @@ export function prepareDataForBackend() {
 
 export async function submitSurvey() {
     saveCurrentAnswers();
+    const demographics = getDemographicData();
     const surveySubmission = {
-        respondentName: document.getElementById('userName').value || "Anonymous",
+        ...demographics,
         answers: prepareDataForBackend()
 
     }
