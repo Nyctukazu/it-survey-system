@@ -19,7 +19,9 @@
 
 
 <h3>Description</h3>
-<p>This is a Web Development Project by Group 3</p>
+<p>This is a Web Development Project by Group 3.  Using Java Spring Boot for backend development.  The Client side follows a traditional REST API, while the Admin side uses Thymeleaf.  I designed it that way since, for the Admin side, it has to access the database directly.  Managing data from a survey is very crucial; I need to consider its security.  In this project, I used H2 as a database since it is lightweight but feels the same as SQL.</p>
+
+<p>As the Project Lead, it was never easy; I had to manage the tasks and deadlines for my members.  If I did not act, they would also go idle.  There were challenges, especially since this is just a 2-week project.  I have to fix some bugs on the frontend since it lacks organization, and the design took most of the time, so I have to take action. I did the prototyping and changes.</p>
 <br>
 <hr>
 <p>Project Lead, Backend | Cruz, Laurence Ryan </p>
